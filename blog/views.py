@@ -18,7 +18,8 @@ def login(request):
     if username != '' and password != '':
       #  return HttpResponse('login success!')
       response = HttpResponseRedirect('/login_ok/')
-      response.set_cookie('username',username,3600) #user cookie
+  #    response.set_cookie('username',username,3600) #用户名 cookie
+      request.session['username']=username #将session信息写到服务器
       return response
     else:
       return render_to_response('index.html', {'error':'username or password error!','blogs':blog_list})
@@ -26,10 +27,12 @@ def login(request):
     #登录成功
 def login_ok(request):
     blog_list=Blog.objects.all()
-    username = request.COOKIES.get('username','') # read web Cookie
+ #   username = request.COOKIES.get('username','') # read web Cookie
+    username = request.session.get('username','')
     return render_to_response('login_ok.html',{'user':username,'blog_list':blog_list})
 
 def loginout(request):
     response = HttpResponseRedirect('/index/') # 返回首页
-    response.delete_cookie('username') #清理cookie里保存username
+  #  response.delete_cookie('username') #清理cookie里保存username
+    del request.session['username']  #清理用户session
     return response
