@@ -23,7 +23,7 @@ def login(request):
     else:
       return render_to_response('index.html', {'error':'username or password error!','blogs':blog_list})
     
-    #login success
+    #登录成功
 def login_ok(request):
     blog_list=Blog.objects.all()
     username = request.COOKIES.get('username','') # read web Cookie
