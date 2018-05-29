@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url
-from blog import views
-import blog
+from blog.views import index
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^index/$', blog.views.index),
+    url(r'^index/$', index),
+ #   url(r'^login/$', login),
 ]
