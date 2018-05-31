@@ -6,6 +6,7 @@ from django.http.response import HttpResponseRedirect
 from http.cookiejar import Cookie
 from softwareproperties.cloudarchive import WEB_LINK
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -31,6 +32,7 @@ def login(request):
       return render_to_response('index.html', {'error':'username or password error!','blogs':blog_list})
     
     #登录成功
+@login_required
 def login_ok(request):
     blog_list=Blog.objects.all()
  #   username = request.COOKIES.get('username','') # read web Cookie
@@ -38,6 +40,7 @@ def login_ok(request):
     user = username[0]
     return render_to_response('login_ok.html',{'user':username,'blog_list':blog_list})
 
+@login_required
 def loginout(request):
     response = HttpResponseRedirect('/index/') # 返回首页
   #  response.delete_cookie('username') #清理cookie里保存username
